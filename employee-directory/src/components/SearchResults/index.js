@@ -3,33 +3,40 @@ import "./style.css";
 import Table from 'react-bootstrap/Table';
 
 function SearchResults(props) {
+  console.log(props)
+
   return (
     <Table striped bordered hover variant="dark">
       <thead>
         <tr>
           <th>Image</th>
-          <th>First Name</th>
-          <th>Last Name</th>
+          <th>Full Name</th>
           <th>Email</th>
+          <th>Phone</th>
+          <th>Country</th>
+          <th>State</th>
+          <th>city</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
+        {
+          props.employeeList.map((employee, a) => (
+            <tr key={a}>
+
+              <td><img src={employee.picture.thumbnail} alt={employee.name} /></td>
+              <td>{`${employee.name.first} ${employee.name.last}`}</td>
+              <td>{employee.email}</td>
+              <td>{employee.phone}</td>
+              <td>{employee.location.country}</td>
+              <td>{employee.location.state}</td>
+              <td>{employee.location.city}</td>
+
+            </tr>
+          ))
+        }
       </tbody>
     </Table>
-    // <ul className="list-group search-results">
-    //   {props.results.map(result => (
-    //     <li key={result} className="list-group-item">
-    //       <img alt="Dog" src={result} className="img-fluid" />
-    //     </li>
-    //   ))}
-    // </ul>
-  );
+  )
 }
 
 export default SearchResults;
