@@ -1,0 +1,10 @@
+.container {
+    text-align: center;
+}
+
+.jumbotron-fluid {
+    background: #1d3557;
+    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+}
