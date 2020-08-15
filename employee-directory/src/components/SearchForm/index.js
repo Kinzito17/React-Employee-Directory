@@ -1,29 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
+import Form from 'react-bootstrap/Form'
+import API from '../../utils/API';
+import SearchResults from "./SearchResults";
+
 
 // Using the datalist element we can create autofill suggestions based on the props.breeds array
 function SearchForm(props) {
+  console.log(props)
+
+  const [searchEmployee, setSearchEmployee] = useState("");
+  const [employees, setEmployees] = useState([]);
+
+  //Calls to load employees
+  useEffect(() => {
+    loadFifty()
+  }, [])
+
+  //Calls API
+  const loadFifty = () => {
+    API.loadEmps()
+      .then(res => {
+        setEmployees(res.data.results)
+      })
+      .catch(err => console.log(err));
+  }
+
+  function employeeSearches(evt) {
+    setSearchEmployee(evt);
+    filterEmployee(searchEmployee, employees);
+  }
+
+  function filterEmployee(evt, list) {
+
+    const filteredList = list.filter(employee => employee.name.first.includes(evt));
+
+    if (filteredList.length > 0) {
+      setEmployees(filteredList);
+
+    }
+
+  }
+
   return (
-    <form className="search">
-      <div className="form-group">
-        <label htmlFor="breed">Employee Name:</label>
-        <input
-          value={props.search}
-          onChange={props.handleInputChange}
-          name="breed"
-          list="breeds"
-          type="text"
-          className="form-control"
-          placeholder="Type employee name here..."
-          id="breed"
-        />
-        {/* <datalist id="breeds">
-          {props.breeds.map(breed => (
-            <option value={breed} key={breed} />
-          ))}
-        </datalist> */}
-      </div>
-    </form>
+    <Form.Group>
+      <Form.Label>Employee Name:</Form.Label>
+      <Form.Control
+        type="text"
+        placeholder="Type employee name here..."
+        name="searchEmployee"
+        onChange={evt => employeeSearches(evt.target.value)}
+      />
+    </Form.Group>
+    <SearchResults employees={employees} />
   );
 }
 

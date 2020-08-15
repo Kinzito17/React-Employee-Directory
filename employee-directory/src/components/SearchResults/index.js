@@ -3,10 +3,11 @@ import "./style.css";
 import Table from 'react-bootstrap/Table';
 
 function SearchResults(props) {
-  console.log(props)
 
   return (
+
     <Table striped bordered hover variant="dark">
+
       <thead>
         <tr>
           <th>Image</th>
@@ -20,7 +21,7 @@ function SearchResults(props) {
       </thead>
       <tbody>
         {
-          props.employeeList.map((employee, a) => (
+          props.employees.map((employee, a) => (
             <tr key={a}>
 
               <td><img src={employee.picture.thumbnail} alt={employee.name} /></td>
