@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import Form from 'react-bootstrap/Form'
 import API from '../../utils/API';
-import SearchResults from "../../components/SearchResults";
+import SearchResults from "../SearchResults";
 
 
 // Using the datalist element we can create autofill suggestions based on the props.breeds array
