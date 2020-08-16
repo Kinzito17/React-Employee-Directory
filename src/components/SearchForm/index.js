@@ -10,6 +10,8 @@ function SearchForm() {
 
   const [searchEmployee, setSearchEmployee] = useState("");
   const [employees, setEmployees] = useState([]);
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
+
 
   //Calls to load employees
   useEffect(() => {
@@ -21,24 +23,27 @@ function SearchForm() {
     API.loadEmps()
       .then(res => {
         setEmployees(res.data.results)
-        console.log(res.data)
+        setFilteredEmployees(res.data.results)
+        // console.log(res.data)
 
       })
       .catch(err => console.log(err));
   }
 
   function employeeSearch(evt) {
-    setSearchEmployee(evt);
-    filterEmployee(searchEmployee, employees);
+    filterEmployee(evt, employees);
   }
 
   function filterEmployee(evt, list) {
+    console.log(evt)
+    const filteredList = list.filter(employee => {
+      let values = Object.values(employee)
+        .join("")
+        .toLowerCase();
+      return values.indexOf(evt.toLowerCase()) !== -1;
+    });
+    setFilteredEmployees(filteredList);
 
-    const filteredList = list.filter(employee => employee.name.first.match(evt));
-
-    if (filteredList.length > 0) {
-      setEmployees(filteredList);
-    }
   }
 
   return (
@@ -52,9 +57,12 @@ function SearchForm() {
           onChange={evt => employeeSearch(evt.target.value)}
         />
       </Form.Group>
-      <SearchResults employees={employees} />
+      <SearchResults employees={filteredEmployees} />
     </>
   );
 }
 
 export default SearchForm;
+
+
+// employee.name.first.match(evt)
