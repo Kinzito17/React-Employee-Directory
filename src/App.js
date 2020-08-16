@@ -9,7 +9,7 @@ function App() {
     <Router>
       <div>
         <Wrapper>
-          <Route path="/" component={Home} />
+          <Route exact path="/" component={Home} />
         </Wrapper>
         <Footer />
       </div>
